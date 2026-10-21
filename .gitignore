@@ -1,0 +1,46 @@
+# Histórico de versões (não precisa versionar tudo)
+versions/
+
+# Drafts e arquivos de revisão
+v2-review/
+
+# arquivos internos, nunca publicar
+/*.md
+01-perfil-google/
+02-campanha-google-ads/
+04-landing-pages/
+06-integracoes-api/
+07-akatu-ads/
+08-akatu-geo/
+10-socios/
+audio-analysis/
+tests/
+relatorios/
+infantil/online-hml/
+pb.html
+*.py
+credentials/
+*.json
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Zip temporário (gerado pra deploy manual)
+drguilhermemota-site.zip
+*.zip
+
+# Netlify
+.netlify/
+
+# Logs
+*.log
