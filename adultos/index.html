@@ -72,7 +72,7 @@
 <section class="section faq" id="duvidas" aria-labelledby="duvidas-titulo"><div class="wrap faq-grid"><div><span class="eyebrow">Antes de agendar</span><h2 id="duvidas-titulo">Algumas dúvidas frequentes.</h2></div><div><details><summary>O atendimento é particular?</summary><p>Sim. As consultas são particulares. A consulta custa R$ 500, com pagamento por Pix ou dinheiro. Você recebe nota fiscal para solicitar reembolso ao seu plano de saúde, conforme as regras do plano. Consulte os horários pelo WhatsApp antes de confirmar seu agendamento.</p></details><details><summary>Onde acontece a consulta presencial?</summary><p>Na Av. Nelson Cardoso, 1149, sala 1322, na Taquara, Rio de Janeiro. O atendimento é feito com hora marcada.</p></details><details><summary>Como me preparo para a consulta online?</summary><p>Reserve um local com privacidade, conexão estável e um aparelho com câmera e microfone. As orientações de acesso são informadas antes do atendimento.</p></details><details><summary>Como consultar os horários e valores?</summary><p>Use um dos botões de agendamento. A mensagem inicial identifica seu interesse no atendimento adulto, presencial ou online. Não é necessário enviar detalhes clínicos nessa primeira mensagem.</p></details></div></div></section>
 <section class="closing" aria-labelledby="final-titulo"><div class="wrap"><div><h2 id="final-titulo">Seu próximo passo pode começar por aqui.</h2><p>Consulte os horários e escolha entre o atendimento presencial na Taquara e a consulta online.</p></div><a class="btn" href="https://wa.me/5551983300503?text=Ol%C3%A1%21%20Vi%20a%20p%C3%A1gina%20de%20atendimento%20do%20Dr.%20Guilherme%20Mota%20e%20gostaria%20de%20informa%C3%A7%C3%B5es%20para%20agendar%20uma%20consulta." target="_blank" rel="noopener" data-mode="geral">Agendar pelo WhatsApp <span aria-hidden="true">↗</span></a></div></section>
 </main>
-<footer><div class="wrap"><div class="footer-top"><div><strong>Dr. Guilherme Mota</strong><p>Médico · CRM-RJ 52.125913-0<br>Atendimento particular para adultos.</p></div><div class="footer-links"><a href="https://www.drguilhermemota.com.br/">Página inicial ↗</a><a href="https://www.drguilhermemota.com.br/politica-privacidade.html">Privacidade ↗</a></div></div><p class="footer-note">Este site é informativo e não substitui consulta médica. Atendimento com hora marcada. Abrir o WhatsApp não confirma um agendamento.</p><div class="wrap"><button class="adultos-consent-review" type="button" id="adultos-consent-review" aria-controls="adultos-consent" aria-expanded="false">Rever escolha de mensuração</button><p class="adultos-consent-status" id="adultos-consent-status" role="status"></p></div></div></footer>
+<footer><div class="wrap"><div class="footer-top"><div><strong>Dr. Guilherme Mota</strong><p>Médico · CRM-RJ 52.125913-0<br>Atendimento particular para adultos.</p></div><div class="footer-links"><a href="https://www.drguilhermemota.com.br/">Página inicial ↗</a><a href="https://www.drguilhermemota.com.br/politica-privacidade.html">Privacidade ↗</a></div></div><p class="footer-note">Este site é informativo e não substitui consulta médica. Atendimento com hora marcada. Abrir o WhatsApp não confirma um agendamento.</p><div class="wrap"><button class="adultos-consent-review" type="button" id="adultos-consent-review" aria-controls="adultos-consent" aria-expanded="false">Medição de visitas</button><p class="adultos-consent-status" id="adultos-consent-status" role="status"></p></div></div></footer>
 <div class="mobile-cta"><a class="btn" href="https://wa.me/5551983300503?text=Ol%C3%A1%21%20Vi%20a%20p%C3%A1gina%20de%20atendimento%20do%20Dr.%20Guilherme%20Mota%20e%20gostaria%20de%20informa%C3%A7%C3%B5es%20para%20agendar%20uma%20consulta." target="_blank" rel="noopener" data-mode="geral">Agendar pelo WhatsApp <span aria-hidden="true">↗</span></a></div>
 <script>
 (function () {
@@ -139,7 +139,7 @@
     var saved = saveChoice(value);
     granted = value === 'granted';
     showChoice(false);
-    status.textContent = (granted ? 'Mensuração autorizada.' : 'Mensuração recusada.') + (saved ? '' : ' Sua escolha vale apenas nesta visita.');
+    status.textContent = (granted ? 'Medição ativa.' : 'Medição desligada.') + (saved ? '' : ' Sua escolha vale apenas nesta visita.');
     review.focus({preventScroll: true});
     if (granted) startMeasurement();
     else if (loaded) stopMeasurement();
@@ -190,12 +190,15 @@
   }
   window.addEventListener('click', measureWhatsApp, true);
   window.addEventListener('auxclick', measureWhatsApp, true);
+  // Sem aviso no topo (decisão do Dr., 21/10/2026): medição ativa por padrão,
+  // desligável pelo rodapé.
   var choice = readChoice();
-  if (choice === 'granted' || choice === 'denied') {
-    granted = choice === 'granted';
-    status.textContent = granted ? 'Mensuração autorizada.' : 'Mensuração recusada.';
-    if (granted) startMeasurement();
-  } else showChoice(true);
+  if (choice === 'denied') {
+    status.textContent = 'Medição desligada.';
+  } else {
+    granted = true;
+    startMeasurement();
+  }
 }());
 </script>
 </body></html>

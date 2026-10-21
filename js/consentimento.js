@@ -1,5 +1,6 @@
-/* Escolha de privacidade (LGPD).
- * Nenhuma ferramenta de medição do Google é carregada antes do aceite.
+/* Medição de visitas e cliques (decisão do Dr. Guilherme, 21/10/2026).
+ * Sem aviso na tela: a medição fica ativa por padrão, explicada na
+ * Política de Privacidade, com opção de desligar no rodapé.
  * Configuração por página, no próprio <script>:
  *   data-ga="G-..."            obrigatório
  *   data-ads="AW-..."          opcional (Google Ads)
@@ -62,21 +63,19 @@
   box.setAttribute('aria-labelledby', 'cs-title');
   box.innerHTML =
     '<h2 id="cs-title" class="cs-sr" tabindex="-1">Sua escolha de privacidade</h2>' +
-    '<p>Medimos visitas e cliques só com sua autorização. Sem dados clínicos. Recusar não impede o agendamento. <a href="/politica-privacidade.html">Saiba mais</a>.</p>' +
-    '<div class="cs-acts"><button type="button" id="cs-accept">Aceitar</button>' +
-    '<button type="button" id="cs-reject">Recusar</button></div>';
-  // Logo abaixo do cabeçalho, como na página de adultos.
-  var hdr = document.querySelector('body > header');
-  if (hdr && hdr.parentNode) hdr.parentNode.insertBefore(box, hdr.nextSibling);
-  else document.body.insertBefore(box, document.body.firstChild);
+    '<p>Medimos visitas e cliques no WhatsApp, sem dados clínicos. Desligar não impede o agendamento. <a href="/politica-privacidade.html">Saiba mais</a>.</p>' +
+    '<div class="cs-acts"><button type="button" id="cs-accept">Permitir</button>' +
+    '<button type="button" id="cs-reject">Não medir</button></div>';
+  // Sem aviso no topo: a caixa só aparece se a pessoa pedir pelo rodapé.
 
   var foot = document.createElement('div');
   foot.className = 'cs-foot';
-  foot.innerHTML = '<button type="button" class="cs-review" id="cs-review" aria-controls="cs-box" aria-expanded="false">Rever escolha de mensuração</button>' +
+  foot.innerHTML = '<button type="button" class="cs-review" id="cs-review" aria-controls="cs-box" aria-expanded="false">Medição de visitas</button>' +
     '<span class="cs-status" id="cs-status" role="status"></span>';
   var footer = document.querySelector('footer');
   var wrap = footer && (footer.querySelector('.wrap') || footer);
   (wrap || document.body).appendChild(foot);
+  foot.appendChild(box);
 
   var review = document.getElementById('cs-review');
   var status = document.getElementById('cs-status');
@@ -126,7 +125,7 @@
     var saved = saveChoice(value);
     granted = value === 'granted';
     showChoice(false);
-    status.textContent = (granted ? 'Mensuração autorizada.' : 'Mensuração recusada.') +
+    status.textContent = (granted ? 'Medição ativa.' : 'Medição desligada.') +
       (saved ? '' : ' Sua escolha vale apenas nesta visita.');
     review.focus({ preventScroll: true });
     if (granted) startMeasurement();
@@ -169,14 +168,11 @@
   window.addEventListener('auxclick', measureWhatsApp, true);
 
   var choice = readChoice();
-  if (choice === 'granted') {
-    granted = true;
-    status.textContent = 'Mensuração autorizada.';
-    startMeasurement();
-  } else if (choice === 'denied') {
-    status.textContent = 'Mensuração recusada.';
+  if (choice === 'denied') {
+    status.textContent = 'Medição desligada.';
     try { localStorage.removeItem(REF_KEY); } catch (_) {}
   } else {
-    showChoice(true);
+    granted = true;
+    startMeasurement();
   }
 }());
