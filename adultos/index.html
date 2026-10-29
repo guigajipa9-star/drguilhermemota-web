@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <!-- csp-site-v1 -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Nbzhnd0NBCTap7xvS81XNO81nxjZtN8Py+ve2Y/q5nw=' 'sha256-tiv7fQUEqfkscTPlb06oH5SyBUUS3SdT6qEv3jJpPrw=' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://stats.g.doubleclick.net https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.google.com https://www.googleadservices.com https://*.doubleclick.net; frame-src https://www.google.com https://td.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-udiCqwS5P04kY20eDa9CubJh/2OypKGJmoMumOaTF70=' 'sha256-tiv7fQUEqfkscTPlb06oH5SyBUUS3SdT6qEv3jJpPrw=' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://stats.g.doubleclick.net https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.google.com https://www.googleadservices.com https://*.doubleclick.net; frame-src https://www.google.com https://td.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <script>(function(){try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.location.href;}}catch(e){document.documentElement.style.display='none';}})();</script>
   <!-- /csp-site-v1 -->
@@ -79,6 +79,7 @@
 </main>
 <footer><div class="wrap"><div class="footer-top"><div><strong>Dr. Guilherme Mota</strong><p>Médico · CRM-RJ 52.125913-0<br>Atendimento particular para adultos.</p></div><div class="footer-links"><a href="https://www.drguilhermemota.com.br/">Página inicial ↗</a><a href="https://www.drguilhermemota.com.br/politica-privacidade.html">Privacidade ↗</a></div></div><p class="footer-note">Este site é informativo e não substitui consulta médica. Atendimento com hora marcada. Abrir o WhatsApp não confirma um agendamento.</p><div class="wrap"><button class="adultos-consent-review" type="button" id="adultos-consent-review" aria-controls="adultos-consent" aria-expanded="false">Medição de visitas</button><p class="adultos-consent-status" id="adultos-consent-status" role="status"></p></div></div></footer>
 <div class="mobile-cta"><a class="btn" href="https://wa.me/5551983300503?text=Ol%C3%A1%21%20Vi%20a%20p%C3%A1gina%20de%20atendimento%20do%20Dr.%20Guilherme%20Mota%20e%20gostaria%20de%20informa%C3%A7%C3%B5es%20para%20agendar%20uma%20consulta." target="_blank" rel="noopener" data-mode="geral">Agendar pelo WhatsApp <span aria-hidden="true">↗</span></a></div>
+<script src="/js/ref-ads.js?v=1"></script>
 <script>
 (function () {
   'use strict';
@@ -139,6 +140,10 @@
     script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
     script.id = 'adultos-google-tag';
     document.head.appendChild(script);
+    // Código de referência do anúncio na mensagem do WhatsApp: só com aceite.
+    if (typeof window.__aplicarRefAds === 'function') {
+      try { window.__aplicarRefAds(); } catch (_) {}
+    }
   }
   function choose(value) {
     var saved = saveChoice(value);
@@ -147,10 +152,14 @@
     status.textContent = (granted ? 'Medição ativa.' : 'Medição desligada.') + (saved ? '' : ' Sua escolha vale apenas nesta visita.');
     review.focus({preventScroll: true});
     if (granted) startMeasurement();
-    else if (loaded) stopMeasurement();
+    else {
+      try { localStorage.removeItem('clic_id_ads'); } catch (_) {}
+      if (loaded) stopMeasurement();
+    }
   }
   function stopMeasurement() {
     granted = false;
+    try { localStorage.removeItem('clic_id_ads'); } catch (_) {}
     window['ga-disable-' + GA] = true;
     window.gtag = function () {};
     if (window.dataLayer) window.dataLayer.length = 0;
@@ -200,6 +209,7 @@
   var choice = readChoice();
   if (choice === 'denied') {
     status.textContent = 'Medição desligada.';
+    try { localStorage.removeItem('clic_id_ads'); } catch (_) {}
   } else {
     granted = true;
     startMeasurement();
