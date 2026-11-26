@@ -75,4 +75,46 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.drguilhermemota.com.br/videos/</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.drguilhermemota.com.br/videos/medo-de-sair-de-casa-ansiedade/</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.drguilhermemota.com.br/videos/tdah-dez-abas-abertas/</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.drguilhermemota.com.br/videos/tedio-rede-de-modo-padrao/</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.drguilhermemota.com.br/videos/sensibilidade-sensorial-em-adultos/</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.drguilhermemota.com.br/videos/ansiedade-e-medicacao/</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.drguilhermemota.com.br/videos/remedio-para-dormir-vicia/</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>
